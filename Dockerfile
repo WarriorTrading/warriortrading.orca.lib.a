@@ -24,4 +24,7 @@ RUN echo "<settings> \n\
 COPY pom.xml pom.xml
 COPY src/ src/
 
+# 获取并输出版本号，并写入 version.txt
+RUN mvn help:evaluate -Dexpression=project.version -q -DforceStdout | tee version.txt
+
 RUN mvn clean deploy -Dmaven.test.skip=true

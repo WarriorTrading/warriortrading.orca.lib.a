@@ -42,10 +42,7 @@ spec:
         stage('0. get project version') {
             container('docker') {
                 script {
-                    def version = sh(
-                        script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout",
-                        returnStdout: true
-                    ).trim()
+                    def version = readFile('version.txt').trim()
                     env.PROJECT_VERSION = version
                     echo "当前版本号: ${env.PROJECT_VERSION}"
                 }
