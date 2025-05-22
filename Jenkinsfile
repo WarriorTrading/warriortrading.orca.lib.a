@@ -12,6 +12,19 @@ volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
        
         ///////////////////////////////////////////////////////////////////////////////
 
+        stage('0. get project version') {
+            container('docker') {
+                script {
+                    def version = sh(
+                        script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout",
+                        returnStdout: true
+                    ).trim()
+                    env.PROJECT_VERSION = version
+                    echo "当前版本号: ${env.PROJECT_VERSION}"
+                }
+            }
+        }
+
         def build_config = repoHelper.getBuildImageConfig(repo_name, image_name)
 
         stage('1. checkout code, build & push image and tag repo') {
