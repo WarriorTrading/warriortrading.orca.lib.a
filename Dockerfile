@@ -24,8 +24,5 @@ RUN echo "<settings> \n\
 COPY pom.xml pom.xml
 COPY src/ src/
 
-RUN CURRENT_VERSION=$(grep -m1 '<version>' pom.xml | sed -E 's/.*<version>([^<]+)<\\/version>.*/\\1/') && \
-echo ${CURRENT_VERSION}
-
 RUN mvn clean deploy -Dmaven.test.skip=true
 

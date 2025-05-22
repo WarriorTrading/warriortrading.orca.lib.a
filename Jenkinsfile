@@ -17,7 +17,8 @@ volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
         stage('1. checkout code, build & push image and tag repo') {
             container('docker') {
                 echo "start ===> 1. checkout code, build image, push image and tag repo"
-
+                echo "DEBUG: parameter currentVersion = ${CURRENT_VERSION}"
+                
                 withCredentials([
                     usernamePassword(credentialsId: aws_credentialsId, passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')
                     ]) {
