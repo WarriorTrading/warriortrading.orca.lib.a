@@ -26,3 +26,5 @@ COPY src/ src/
 
 RUN mvn clean deploy -Dmaven.test.skip=true
 
+echo "some string"
+

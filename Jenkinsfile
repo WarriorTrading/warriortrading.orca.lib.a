@@ -1,3 +1,10 @@
+properties([
+  parameters([
+    string(name: 'CURRENT_VERSION', defaultValue: '1.0.0', description: '当前版本号'),
+  ])
+])
+
+
 @Library("jenkins-library") _
 podTemplate(label: 'dind-pod', containers: getTemplates.getJenkinsAgentTemplate(),
 volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
@@ -9,17 +16,15 @@ volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
         def image_name = "liba"
         def aws_credentialsId = 'chiron_s3_credential'
         def aws_region = 'us-east-2'
-
+       
         ///////////////////////////////////////////////////////////////////////////////
 
-        def branch_name = env.BRANCH_NAME
-        def build_config = repoHelper.getBuildImageConfig(repo_name, image_name, branch_name)
+        def build_config = repoHelper.getBuildImageConfig(repo_name, image_name)
 
         stage('1. checkout code, build & push image and tag repo') {
             container('docker') {
                 echo "start ===> 1. checkout code, build image, push image and tag repo"
-                echo "DEBUG: parameter currentVersion = ${CURRENT_VERSION}"
-
+                echo "MY_PARAM is: ${params.CURRENT_VERSION}"
                 withCredentials([
                     usernamePassword(credentialsId: aws_credentialsId, passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')
                     ]) {
