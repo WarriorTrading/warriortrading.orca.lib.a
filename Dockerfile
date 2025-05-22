@@ -24,5 +24,5 @@ RUN echo "<settings> \n\
 COPY pom.xml pom.xml
 COPY src/ src/
 
-RUN mvn clean package -Dmaven.test.skip=true
+RUN mvn clean deploy -Dmaven.test.skip=true
 
