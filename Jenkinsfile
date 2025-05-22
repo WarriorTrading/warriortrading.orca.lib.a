@@ -1,16 +1,40 @@
 @Library("jenkins-library") _
 podTemplate(
     label: 'dind-pod',
-    containers: [
-        getTemplates.getJenkinsAgentTemplate(),
-        containerTemplate(
-            name: 'maven',
-            image: 'warriortrading/mvn_jdk11_compiler:IMAGE-5',
-            ttyEnabled: true,
-            command: 'cat'
-        )
-    ],
-    volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]
+    yaml: """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+    - name: docker
+      image: warriortrading/jenkins-agent:IMAGE-7
+      tty: true
+      command:
+        - dockerd
+        - --host=unix:///var/run/docker.sock
+        - --host=tcp://0.0.0.0:2375
+        - --storage-driver=overlay
+      securityContext:
+        privileged: true
+      volumeMounts:
+        - mountPath: /var/lib/docker
+          name: volume-0
+        - mountPath: /home/jenkins/agent
+          name: workspace-volume
+    - name: maven
+      image: warriortrading/mvn_jdk11_compiler:IMAGE-5
+      tty: true
+      command:
+        - cat
+      volumeMounts:
+        - mountPath: /home/jenkins/agent
+          name: workspace-volume
+  volumes:
+    - name: volume-0
+      emptyDir: {}
+    - name: workspace-volume
+      emptyDir: {}
+"""
 ) {
     node('dind-pod') {
         properties([disableConcurrentBuilds()])
