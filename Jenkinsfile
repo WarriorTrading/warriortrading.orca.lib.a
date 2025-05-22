@@ -12,13 +12,14 @@ volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
 
         ///////////////////////////////////////////////////////////////////////////////
 
-        def build_config = repoHelper.getBuildImageConfig(repo_name, image_name)
+        def branch_name = env.BRANCH_NAME
+        def build_config = repoHelper.getBuildImageConfig(repo_name, image_name, branch_name)
 
         stage('1. checkout code, build & push image and tag repo') {
             container('docker') {
                 echo "start ===> 1. checkout code, build image, push image and tag repo"
                 echo "DEBUG: parameter currentVersion = ${CURRENT_VERSION}"
-                
+
                 withCredentials([
                     usernamePassword(credentialsId: aws_credentialsId, passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')
                     ]) {
