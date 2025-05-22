@@ -21,8 +21,8 @@ RUN echo "<settings> \n\
    >~/.m2/settings.xml
 
 
-COPY ../warriortrading.orca.lib.a/pom.xml  ../pom.xml
-COPY ../warriortrading.orca.lib.a/src ../src/
+COPY pom.xml pom.xml
+COPY src/ src/
 
 RUN mvn clean package assembly:single -Dmaven.test.skip=true
 
