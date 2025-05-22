@@ -1,11 +1,10 @@
+@Library("jenkins-library") _
 properties([
   parameters([
-    string(name: 'CURRENT_VERSION', defaultValue: '1.0.0', description: '当前版本号'),
+    string(name: 'MY_PARAM', defaultValue: 'default', description: '示例参数'),
+    booleanParam(name: 'DO_DEPLOY', defaultValue: false, description: '是否部署')
   ])
 ])
-
-
-@Library("jenkins-library") _
 podTemplate(label: 'dind-pod', containers: getTemplates.getJenkinsAgentTemplate(),
 volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
     node('dind-pod') {
@@ -24,7 +23,11 @@ volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
         stage('1. checkout code, build & push image and tag repo') {
             container('docker') {
                 echo "start ===> 1. checkout code, build image, push image and tag repo"
-                echo "MY_PARAM is: ${params.CURRENT_VERSION}"
+
+                // 验证参数是否正确传入
+                echo "MY_PARAM is: ${params.MY_PARAM}"
+                echo "DO_DEPLOY is: ${params.DO_DEPLOY}"
+
                 withCredentials([
                     usernamePassword(credentialsId: aws_credentialsId, passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')
                     ]) {

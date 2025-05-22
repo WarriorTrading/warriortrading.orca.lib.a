@@ -25,6 +25,3 @@ COPY pom.xml pom.xml
 COPY src/ src/
 
 RUN mvn clean deploy -Dmaven.test.skip=true
-
-echo "some string"
-
