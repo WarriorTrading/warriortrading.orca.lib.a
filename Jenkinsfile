@@ -1,6 +1,17 @@
 @Library("jenkins-library") _
-podTemplate(label: 'dind-pod', containers: getTemplates.getJenkinsAgentTemplate(),
-volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
+podTemplate(
+    label: 'dind-pod',
+    containers: [
+        getTemplates.getJenkinsAgentTemplate(),
+        containerTemplate(
+            name: 'maven',
+            image: 'warriortrading/mvn_jdk11_compiler:IMAGE-5',
+            ttyEnabled: true,
+            command: 'cat'
+        )
+    ],
+    volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]
+) {
     node('dind-pod') {
         properties([disableConcurrentBuilds()])
 
@@ -13,7 +24,7 @@ volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
         ///////////////////////////////////////////////////////////////////////////////
 
         stage('0. get project version') {
-            container('docker') {
+            container('maven') {
                 script {
                     def version = sh(
                         script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout",
