@@ -9,7 +9,7 @@ volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
         def image_name = "liba"
         def aws_credentialsId = 'chiron_s3_credential'
         def aws_region = 'us-east-2'
-        echo ${CURRENT_VERSION}
+
         ///////////////////////////////////////////////////////////////////////////////
 
         def build_config = repoHelper.getBuildImageConfig(repo_name, image_name)
