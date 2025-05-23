@@ -31,5 +31,19 @@ volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
                 echo "finish ===> 1. checkout code, build image, push image and tag repo"
             }
         }
+
+        stage('build-down-job')
+        {
+            steps
+            {
+                build(    //调用另个pipeline任务，并传递参数
+                    job: 'service.b',
+                    parameters: [
+                        string(name: 'LIBA_VERSION', value: '${CURRENT_VERSION}'),
+                    ]
+                )
+                echo 'service.b started'
+            }
+        }
     }
 }
