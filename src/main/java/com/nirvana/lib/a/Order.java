@@ -5,6 +5,16 @@ public class Order {
     private Double amount;
     private String symbol = "AAPL";
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    private double price = 120.0;
+
     public Order() {}
 
     public Order(Long id, Double amount) {
@@ -31,7 +41,7 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", amount=" + amount + ", symbol='" + symbol + "'}";
+                ", amount=" + amount + ", symbol='" + symbol +", price=" + price + "'}";
     }
 
     public String getSymbol() {

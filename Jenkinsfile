@@ -32,7 +32,7 @@ volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
             }
         }
 
-        stage('build-down-job') {
+        stage('build-serviceb-job') {
             echo "Triggering service.b with LIBA_VERSION=${CURRENT_VERSION}"
             build(
                 job: 'serviceb4',
@@ -42,6 +42,17 @@ volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
                 ]
             )
             echo 'service.b started'
+        }
+        stage('build-servicec-job') {
+            echo "Triggering service.c with LIBA_VERSION=${CURRENT_VERSION}"
+            build(
+                job: 'servicec4',
+                parameters: [
+                    [$class: 'StringParameterValue', name: 'LIBA_VERSION', value: "${CURRENT_VERSION}"],
+                    [$class: 'StringParameterValue', name: 'BRANCH_NAME', value: "${BRANCH_NAME}"]
+                ]
+            )
+            echo 'service.c started'
         }
     }
 }

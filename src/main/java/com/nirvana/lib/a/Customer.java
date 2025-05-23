@@ -3,7 +3,7 @@ package com.nirvana.lib.a;
 public class Customer {
     private Long id;
     private String name;
-    private String email;
+    private String email = "test@gmail.com";
 
     public Customer() {}
 
