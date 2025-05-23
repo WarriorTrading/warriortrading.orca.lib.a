@@ -24,4 +24,4 @@ RUN echo "<settings> \n\
 COPY pom.xml pom.xml
 COPY src/ src/
 
-RUN mvn clean deploy -Dmaven.test.skip=true
+RUN mvn clean deploy -Dmaven.test.skip=true -Dcurrent_version=${CURRENT_VERSION}
