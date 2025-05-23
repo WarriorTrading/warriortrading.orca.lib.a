@@ -37,8 +37,8 @@ volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
             build(
                 job: 'serviceb4',
                 parameters: [
-                    string(name: 'LIBA_VERSION', value: "${CURRENT_VERSION}")
-                    string(name: 'BRANCH_NAME', value: "${BRANCH_NAME}")
+                    [$class: 'StringParameterValue', name: 'LIBA_VERSION', value: "${CURRENT_VERSION}"],
+                    [$class: 'StringParameterValue', name: 'BRANCH_NAME', value: "${BRANCH_NAME}"]
                 ]
             )
             echo 'service.b started'
