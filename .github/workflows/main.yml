@@ -1,0 +1,31 @@
+name: Show Branch and Maven Version
+
+on:
+  push:
+    branches:
+      - '**'   # 所有分支都触发
+
+jobs:
+  show-info:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'   # 你的项目用的JDK版本
+
+      - name: Get Maven version
+        id: get_version
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Show branch and version
+        run: |
+          echo "Branch name: ${{ github.ref_name }}"
+          echo "Maven version: ${{ env.VERSION }}"
