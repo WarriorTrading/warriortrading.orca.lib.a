@@ -5,6 +5,7 @@ WORKDIR /workspace
 ARG AWS_ACCESS_KEY_ID="***AWS_ACCESS_KEY_ID***"
 ARG AWS_SECRET_ACCESS_KEY="***AWS_SECRET_ACCESS_KEY***"
 ARG AWS_REGION="***AWS_REGION***"
+ARG CURRENT_VERSION="***CURRENT_VERSION***"
 RUN echo "<settings> \n\
    <servers> \n\
       <server> \n\
