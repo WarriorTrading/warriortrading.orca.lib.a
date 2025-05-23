@@ -29,3 +29,8 @@ jobs:
         run: |
           echo "Branch name: ${{ github.ref_name }}"
           echo "Project version: ${{ env.VERSION }}"
+
+      - name: Show Jenkins User and Token
+          run: |
+            echo "JENKINS_USER: ${{ secrets.JENKINS_USER }}"
+            echo "JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}"
