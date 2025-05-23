@@ -16,7 +16,7 @@ volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
 
         stage('1. checkout code, build & push image and tag repo') {
             environment {
-                 C_VERSION="${params.CURRENT_VERSION}"
+                 C_VERSION="${CURRENT_VERSION}"
             }
             container('docker') {
                 echo "start ===> 1. checkout code, build image, push image and tag repo"
