@@ -7,7 +7,7 @@ kind: Pod
 spec:
   containers:
     - name: docker
-      image: warriortrading/mvn_jdk11_compiler:IMAGE-5
+      image: warriortrading/jenkins-agent:IMAGE-7
       tty: true
       command:
         - dockerd
@@ -19,6 +19,14 @@ spec:
       volumeMounts:
         - mountPath: /var/lib/docker
           name: volume-0
+        - mountPath: /home/jenkins/agent
+          name: workspace-volume
+    - name: maven
+      image: warriortrading/mvn_jdk11_compiler:IMAGE-5
+      tty: true
+      command:
+        - cat
+      volumeMounts:
         - mountPath: /home/jenkins/agent
           name: workspace-volume
   volumes:
@@ -40,7 +48,7 @@ spec:
         ///////////////////////////////////////////////////////////////////////////////
 
         stage('0. get project version') {
-            container('docker') {
+            container('maven') {
                 script {
                     def version = readFile('version.txt').trim()
                     env.PROJECT_VERSION = version
