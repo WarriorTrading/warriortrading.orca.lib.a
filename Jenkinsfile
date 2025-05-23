@@ -10,18 +10,19 @@ volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
         def aws_credentialsId = 'chiron_s3_credential'
         def aws_region = 'us-east-2'
 
-        environment {
-               C_VERSION="${params.CURRENT_VERSION}"
-        }
        
         ///////////////////////////////////////////////////////////////////////////////
         def build_config = repoHelper.getBuildImageConfig(repo_name, image_name)
 
         stage('1. checkout code, build & push image and tag repo') {
+            environment {
+                 C_VERSION="${params.CURRENT_VERSION}"
+            }
             container('docker') {
                 echo "start ===> 1. checkout code, build image, push image and tag repo"
                 echo "branch_name = ${BRANCH_NAME}"
-                echo "VERSION = ${env.C_VERSION}"
+                echo "VERSION = ${CURRENT_VERSION}"
+                echo "C_VERSION = ${env.C_VERSION}"
 
                 withCredentials([
                     usernamePassword(credentialsId: aws_credentialsId, passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')
