@@ -31,8 +31,7 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", amount=" + amount + ", symbol=' + symbol + '\''" +
-                '}';
+                ", amount=" + amount + ", symbol='" + symbol + "'}";
     }
 
     public String getSymbol() {
