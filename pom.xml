@@ -6,7 +6,7 @@
 
     <groupId>com.nirvana</groupId>
     <artifactId>libA</artifactId>
-    <version>${current_version}</version>
+    <version>1.0.14</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
