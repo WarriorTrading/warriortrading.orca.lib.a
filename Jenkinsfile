@@ -42,6 +42,15 @@ spec:
         stage('0. get project version') {
             container('docker') {
                 script {
+                    // 构建镜像
+                    sh 'docker build -t myimage:build .'
+                    // 创建临时容器
+                    sh 'docker create --name temp_container myimage:build'
+                    // 拷贝 version.txt 到 Jenkins 工作区
+                    sh 'docker cp temp_container:/workspace/version.txt ./version.txt'
+                    // 删除临时容器
+                    sh 'docker rm temp_container'
+                    // 读取 version.txt
                     def version = readFile('version.txt').trim()
                     env.PROJECT_VERSION = version
                     echo "当前版本号: ${env.PROJECT_VERSION}"
