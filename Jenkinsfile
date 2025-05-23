@@ -11,7 +11,7 @@ volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
         def aws_region = 'us-east-2'
 
         environment {
-               C_VERSION = '${CURRENT_VERSION'
+               C_VERSION = '${CURRENT_VERSION}'
         }
        
         ///////////////////////////////////////////////////////////////////////////////
@@ -21,7 +21,7 @@ volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
             container('docker') {
                 echo "start ===> 1. checkout code, build image, push image and tag repo"
                 echo "branch_name = ${BRANCH_NAME}"
-                echo "VERSION = ${CURRENT_VERSION}"
+                echo "VERSION = ${C_VERSION}"
 
                 withCredentials([
                     usernamePassword(credentialsId: aws_credentialsId, passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')
