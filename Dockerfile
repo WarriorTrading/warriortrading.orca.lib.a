@@ -25,6 +25,6 @@ COPY pom.xml pom.xml
 COPY src/ src/
 
 # 获取并输出版本号，并写入 version.txt
-RUN mvn help:evaluate -Dexpression=project.version -q -DforceStdout | tee version.txt
+RUN grep -m 1 '<version>' pom.xml | sed 's/.*<version>\(.*\)<\/version>.*/\1/'
 
 RUN mvn clean deploy -Dmaven.test.skip=true
