@@ -35,7 +35,7 @@ volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
         stage('build-down-job') {
             echo "Triggering service.b with LIBA_VERSION=${CURRENT_VERSION}"
             build(
-                job: 'service.b',
+                job: 'serviceb4',
                 parameters: [
                     string(name: 'LIBA_VERSION', value: "${CURRENT_VERSION}")
                 ]

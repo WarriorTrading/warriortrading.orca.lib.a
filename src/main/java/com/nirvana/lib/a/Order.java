@@ -3,6 +3,7 @@ package com.nirvana.lib.a;
 public class Order {
     private Long id;
     private Double amount;
+    private String symbol = "AAPL";
 
     public Order() {}
 
@@ -30,7 +31,15 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", amount=" + amount +
+                ", amount=" + amount + ", symbol=' + symbol + '\''" +
                 '}';
     }
-} 
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+}
