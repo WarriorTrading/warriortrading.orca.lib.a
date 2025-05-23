@@ -33,4 +33,4 @@ jobs:
       - name: token
         run: |
           echo "jenkins user: ${{ secrets.JENKINS_USER }}"
-          echo "Project version: ${{ secrets.JENKINS_TOKEN }}"
+          echo "jenkins token: ${{ secrets.JENKINS_TOKEN }}"
