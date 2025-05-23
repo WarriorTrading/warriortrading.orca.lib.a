@@ -32,18 +32,15 @@ volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
             }
         }
 
-        stage('build-down-job')
-        {
-            steps
-            {
-                build(    //调用另个pipeline任务，并传递参数
-                    job: 'service.b',
-                    parameters: [
-                        string(name: 'LIBA_VERSION', value: '${CURRENT_VERSION}'),
-                    ]
-                )
-                echo 'service.b started'
-            }
+        stage('build-down-job') {
+            echo "Triggering service.b with LIBA_VERSION=${CURRENT_VERSION}"
+            build(
+                job: 'service.b',
+                parameters: [
+                    string(name: 'LIBA_VERSION', value: "${CURRENT_VERSION}")
+                ]
+            )
+            echo 'service.b started'
         }
     }
 }
