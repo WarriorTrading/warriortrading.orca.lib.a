@@ -11,7 +11,7 @@ volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
         def aws_region = 'us-east-2'
 
         environment {
-               C_VERSION = '${CURRENT_VERSION}'
+               C_VERSION="${params.CURRENT_VERSION}"
         }
        
         ///////////////////////////////////////////////////////////////////////////////
