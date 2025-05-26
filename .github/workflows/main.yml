@@ -30,7 +30,11 @@ jobs:
           echo "Branch name: ${{ github.ref_name }}"
           echo "Project version: ${{ env.VERSION }}"
 
-      - name: token
-        run: |
-          echo "jenkins user: ${{ secrets.JENKINS_USER }}"
-          echo "jenkins token: ${{ secrets.JENKINS_TOKEN }}"
+      - name: Trigger Jenkins Job
+          env:
+            JENKINS_USER: ${{ secrets.JENKINS_USER }}
+            JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
+            VERSION: ${{ env.VERSION }}
+          run: |
+            curl -X POST "https://builder2.warriortrading.com/job/libA4/buildWithParameters?CURRENT_VERSION=${VERSION}&BRANCH_NAME=${GITHUB_REF_NAME}" \
+              --user "${JENKINS_USER}:${JENKINS_TOKEN}"
